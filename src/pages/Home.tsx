@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { SearchInput } from "../components/SearchInput";
+import { SearchInput, SelectBox } from "../components/styleElements";
 
 type Props = {};
 
@@ -52,7 +52,7 @@ const Home = ({}: Props) => {
             />
           </SearchInputWrapper>
           <SelectWrapper>
-            <Select
+            <SelectBox
               name="type"
               value={selectOptions.type}
               onChange={selectOnChange}
@@ -60,8 +60,8 @@ const Home = ({}: Props) => {
               <option value="movie">movie</option>
               <option value="series">series</option>
               <option value="episode">episode</option>
-            </Select>
-            <Select
+            </SelectBox>
+            <SelectBox
               name="count"
               value={selectOptions.count}
               onChange={selectOnChange}
@@ -69,8 +69,8 @@ const Home = ({}: Props) => {
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
-            </Select>
-            <Select
+            </SelectBox>
+            <SelectBox
               name="year"
               value={selectOptions.year}
               onChange={selectOnChange}
@@ -81,7 +81,7 @@ const Home = ({}: Props) => {
                   {item}
                 </option>
               ))}
-            </Select>
+            </SelectBox>
           </SelectWrapper>
         </InputWrapper>
       </Container>
@@ -128,20 +128,6 @@ const SelectWrapper = styled.div`
   gap: 20px;
   margin-top: 20px;
   flex-wrap: wrap;
-`;
-
-const Select = styled.select`
-  width: 130px;
-  padding: 6px 36px 6px 12px;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-  font-size: 15px;
-  outline: none;
-
-  &:focus {
-    box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
-    border-color: #40a9ff;
-  }
 `;
 
 export default Home;
