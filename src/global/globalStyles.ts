@@ -7,14 +7,17 @@ ${reset}
   body {
     margin:0;
     padding:0;
-    height:100%;
+    /* height:100%; */
     font-family: 'Pretendard-Regular', "Inter", sans-serif;
   }
 
-  a{
-    color: black;
+  a {
     text-decoration: none;
-  }
+    color: #40a9ff;
+    &:hover {
+      text-decoration: underline;
+    }
+}
 
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
