@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput } from "../components/SearchInput";
 
 type Props = {};
 
 const Home = ({}: Props) => {
+  const navigate = useNavigate();
   const [searchInput, setSearchInput] = useState("");
   const [selectOptions, setSelectOptions] = useState({
     type: "movie",
@@ -23,6 +25,15 @@ const Home = ({}: Props) => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    if (searchInput.trim().length > 0)
+      navigate(
+        `/search?q=${searchInput.trim()}&type=${selectOptions.type}&year=${
+          selectOptions.year
+        }&page=${1}&count=${selectOptions.count}`
+      );
+  }, [searchInput]);
 
   return (
     <main>
