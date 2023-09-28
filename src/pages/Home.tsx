@@ -1,8 +1,29 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { SearchInput } from "../components/SearchInput";
 
 type Props = {};
 
 const Home = ({}: Props) => {
+  const [searchInput, setSearchInput] = useState("");
+  const [selectOptions, setSelectOptions] = useState({
+    type: "movie",
+    year: "all",
+    count: "10",
+  });
+  const yearList = Array.from(
+    Array(39),
+    (_, index) => new Date().getFullYear() - index
+  );
+
+  const selectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = e.target;
+    setSelectOptions({
+      ...selectOptions,
+      [name]: value,
+    });
+  };
+
   return (
     <main>
       <Container>
@@ -14,22 +35,41 @@ const Home = ({}: Props) => {
           <SearchInputWrapper>
             <SearchInput
               type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search for Movies, Series & more "
             />
           </SearchInputWrapper>
           <SelectWrapper>
-            <Select name="type" id="type">
+            <Select
+              name="type"
+              value={selectOptions.type}
+              onChange={selectOnChange}
+            >
               <option value="movie">movie</option>
               <option value="series">series</option>
               <option value="episode">episode</option>
             </Select>
-            <Select name="list-count" id="list-count">
+            <Select
+              name="count"
+              value={selectOptions.count}
+              onChange={selectOnChange}
+            >
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
             </Select>
-            <Select name="year" id="year">
+            <Select
+              name="year"
+              value={selectOptions.year}
+              onChange={selectOnChange}
+            >
               <option value="all">All Years</option>
+              {yearList.map((item) => (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              ))}
             </Select>
           </SelectWrapper>
         </InputWrapper>
@@ -64,27 +104,10 @@ const InputWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 0px 25px 100px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* gap: 20px; */
 `;
 
 const SearchInputWrapper = styled.div`
   display: flex;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  border: 1px solid #d9d9d9;
-  border-radius: 100px;
-  font-size: 18px;
-  padding: 15px 30px;
-  outline: none;
-
-  &:focus {
-    box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
-    border-color: #40a9ff;
-  }
 `;
 
 const SelectWrapper = styled.div`
@@ -109,7 +132,5 @@ const Select = styled.select`
     border-color: #40a9ff;
   }
 `;
-// const Container = styled.div``;
-// const Container = styled.div``;
 
 export default Home;
