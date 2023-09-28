@@ -6,9 +6,7 @@ type Props = {};
 const App = ({}: Props) => {
   return (
     <>
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
       <Footer />
     </>
   );
