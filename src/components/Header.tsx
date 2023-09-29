@@ -1,33 +1,34 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { SearchInput } from "./styleElements";
-import { useState } from "react";
+import { useContext } from "react";
+import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {};
 
 const Header = ({}: Props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-    searchParams.set("q", e.target.value);
-    setSearchParams(searchParams);
-  };
+  const navigate = useNavigate();
+  const queryValue = useContext(QueryStringContext);
 
   return (
     <MyHeader>
       <Container>
         <Title>
-          <Link to={"/"}>
+          <Logo
+            onClick={() => {
+              queryValue?.actions.initializeOptions();
+              navigate("/");
+            }}
+          >
             <span>//</span> Movie Search
-          </Link>
+          </Logo>
         </Title>
         <SearchInputWrapper>
           <SearchInput
             type="text"
-            value={searchInput}
-            onChange={onChange}
+            name="q"
+            value={queryValue?.state.selectOptions.q}
+            onChange={queryValue?.actions.selectOnChange}
             placeholder="Search for Movies, Series & more"
             autoFocus
           />
@@ -63,6 +64,10 @@ const Title = styled.div`
   span {
     color: #40a9ff;
   }
+`;
+
+const Logo = styled.div`
+  cursor: pointer;
 `;
 
 const SearchInputWrapper = styled.div`

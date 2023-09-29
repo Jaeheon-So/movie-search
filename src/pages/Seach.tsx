@@ -3,10 +3,14 @@ import Header from "../components/Header";
 import Option from "../components/Option";
 import { SelectBox } from "../components/styleElements";
 import Movies from "../components/Movies";
+import { useContext } from "react";
+import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {};
 
 const Seach = ({}: Props) => {
+  const queryValue = useContext(QueryStringContext);
+
   const yearList = Array.from(
     Array(39),
     (_, index) => new Date().getFullYear() - index
@@ -19,11 +23,11 @@ const Seach = ({}: Props) => {
         <Container>
           <SideLayout>
             <Option
-              title="Type"
-              options={["Movies", "Series", "Episode"]}
+              title="type"
+              options={["movie", "series", "episode"]}
               counts={[0, 0, 0]}
             />
-            <Option title="List Count" options={["10", "20", "30"]} />
+            <Option title="count" options={["10", "20", "30"]} />
           </SideLayout>
           <MainLayout>
             <MainTop>
@@ -32,8 +36,8 @@ const Seach = ({}: Props) => {
               </PageInfo>
               <SelectBox
                 name="year"
-                // value={selectOptions.year}
-                // onChange={selectOnChange}
+                value={queryValue?.state.selectOptions.year}
+                onChange={queryValue?.actions.selectOnChange}
               >
                 <option value="all">All Years</option>
                 {yearList.map((item) => (

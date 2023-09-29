@@ -1,37 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SearchInput, SelectBox } from "../components/styleElements";
+import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {};
 
 const Home = ({}: Props) => {
   const navigate = useNavigate();
+  const queryValue = useContext(QueryStringContext);
   const [searchInput, setSearchInput] = useState("");
-  const [selectOptions, setSelectOptions] = useState({
-    type: "movie",
-    year: "all",
-    count: "10",
-  });
+
   const yearList = Array.from(
     Array(39),
     (_, index) => new Date().getFullYear() - index
   );
 
-  const selectOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, name } = e.target;
-    setSelectOptions({
-      ...selectOptions,
-      [name]: value,
-    });
-  };
-
   useEffect(() => {
-    if (searchInput.trim().length > 0)
+    if (searchInput.length > 0)
       navigate(
-        `/search?q=${searchInput.trim()}&type=${selectOptions.type}&year=${
-          selectOptions.year
-        }&page=${1}&count=${selectOptions.count}`
+        `/search?q=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}&count=${queryValue?.state.selectOptions.count}`
       );
   }, [searchInput]);
 
@@ -46,6 +34,7 @@ const Home = ({}: Props) => {
           <SearchInputWrapper>
             <SearchInput
               type="text"
+              name="q"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search for Movies, Series & more "
@@ -54,8 +43,8 @@ const Home = ({}: Props) => {
           <SelectWrapper>
             <SelectBox
               name="type"
-              value={selectOptions.type}
-              onChange={selectOnChange}
+              value={queryValue?.state.selectOptions.type}
+              onChange={queryValue?.actions.selectOnChange}
             >
               <option value="movie">movie</option>
               <option value="series">series</option>
@@ -63,8 +52,8 @@ const Home = ({}: Props) => {
             </SelectBox>
             <SelectBox
               name="count"
-              value={selectOptions.count}
-              onChange={selectOnChange}
+              value={queryValue?.state.selectOptions.count}
+              onChange={queryValue?.actions.selectOnChange}
             >
               <option value="10">10</option>
               <option value="20">20</option>
@@ -72,8 +61,8 @@ const Home = ({}: Props) => {
             </SelectBox>
             <SelectBox
               name="year"
-              value={selectOptions.year}
-              onChange={selectOnChange}
+              value={queryValue?.state.selectOptions.year}
+              onChange={queryValue?.actions.selectOnChange}
             >
               <option value="all">All Years</option>
               {yearList.map((item) => (

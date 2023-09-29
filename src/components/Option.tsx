@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {
   title: string;
@@ -7,14 +9,22 @@ type Props = {
 };
 
 const Option = ({ title, options, counts }: Props) => {
+  const queryValue = useContext(QueryStringContext);
+
   const labels = options.map((option, idx) => (
     <Label key={option}>
       <InputWrapper>
         <div className="checkbox">
-          <input type="radio" name={title} value={option} />
+          <input
+            type="radio"
+            name={title}
+            value={option}
+            checked={queryValue?.state.selectOptions[title] === option}
+            onChange={queryValue?.actions.selectOnChange}
+          />
           <span className="inner"></span>
         </div>
-        <div>{option}</div>
+        <div>{option.charAt(0).toUpperCase() + option.slice(1)}</div>
       </InputWrapper>
       {counts ? <span>{counts[idx]}</span> : null}
     </Label>
@@ -22,7 +32,7 @@ const Option = ({ title, options, counts }: Props) => {
 
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{title.charAt(0).toUpperCase() + title.slice(1)}</Title>
       <LabelWrapper>{labels}</LabelWrapper>
     </Container>
   );
@@ -72,7 +82,7 @@ const InputWrapper = styled.div`
       cursor: pointer;
       margin: 0;
       padding: 0;
-      opacity: 0;
+      /* opacity: 0; */
     }
     &.checked::after {
       position: absolute;
@@ -83,7 +93,6 @@ const InputWrapper = styled.div`
       border: 1px solid #1890ff;
       border-radius: 2px;
       visibility: hidden;
-      /* animation: antCheckboxEffect 0.36s ease-in-out; */
       animation-fill-mode: backwards;
       content: "";
     }
