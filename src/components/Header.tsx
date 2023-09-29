@@ -29,9 +29,8 @@ const MyHeader = styled.header`
 `;
 
 const Container = styled.div`
-  max-width: 1300px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 1250px;
+  margin: auto;
   display: flex;
   align-items: center;
   padding: 30px 24px 40px;
