@@ -1,7 +1,13 @@
+import Header from "../components/Header";
+
 type Props = {};
 
 const Seach = ({}: Props) => {
-  return <div>Seach</div>;
+  return (
+    <>
+      <Header></Header>
+    </>
+  );
 };
 
 export default Seach;

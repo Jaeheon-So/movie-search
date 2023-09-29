@@ -13,11 +13,7 @@ ${reset}
 
   a {
     text-decoration: none;
-    color: #40a9ff;
-    &:hover {
-      text-decoration: underline;
-    }
-}
+  }
 
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {

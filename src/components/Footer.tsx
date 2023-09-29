@@ -90,5 +90,13 @@ const Detail = styled.div<{ width: string }>`
     color: #40a9ff;
     text-decoration: none;
   }
+
+  a {
+    text-decoration: none;
+    color: #40a9ff;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 export default Footer;

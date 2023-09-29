@@ -7,6 +7,8 @@ export const SearchInput = styled.input`
   font-size: 18px;
   padding: 15px 30px;
   outline: none;
+  max-width: 700px;
+  min-width: 215px;
 
   &:focus {
     box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);

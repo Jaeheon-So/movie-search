@@ -111,7 +111,7 @@ const Subtitle = styled.div`
 `;
 
 const InputWrapper = styled.div`
-  max-width: 700px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
   padding: 0px 25px 100px;
