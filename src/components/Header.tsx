@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { SearchInput } from "./styleElements";
+import { useState } from "react";
 
 type Props = {};
 
 const Header = ({}: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+    searchParams.set("q", e.target.value);
+    setSearchParams(searchParams);
+  };
+
   return (
     <MyHeader>
       <Container>
@@ -16,7 +26,10 @@ const Header = ({}: Props) => {
         <SearchInputWrapper>
           <SearchInput
             type="text"
-            placeholder="Search for Movies, Series & more "
+            value={searchInput}
+            onChange={onChange}
+            placeholder="Search for Movies, Series & more"
+            autoFocus
           />
         </SearchInputWrapper>
       </Container>
