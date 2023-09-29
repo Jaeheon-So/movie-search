@@ -35,12 +35,13 @@ const Container = styled.div`
   margin: auto;
   display: flex;
   gap: 32px;
-  height: 3000px;
+  /* height: 3000px; */
   padding: 0 24px;
 `;
 
 const SideLayout = styled.div`
   width: 24%;
+  min-width: 130px;
   /* border: 1px solid blueviolet; */
   color: #627078;
   display: flex;
