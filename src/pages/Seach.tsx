@@ -23,11 +23,16 @@ const Seach = ({}: Props) => {
         <Container>
           <SideLayout>
             <Option
-              title="type"
+              title="Type"
+              name="type"
               options={["movie", "series", "episode"]}
               counts={[0, 0, 0]}
             />
-            <Option title="count" options={["10", "20", "30"]} />
+            <Option
+              title="List Count"
+              name="count"
+              options={["10", "20", "30"]}
+            />
           </SideLayout>
           <MainLayout>
             <MainTop>

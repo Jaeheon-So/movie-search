@@ -4,22 +4,29 @@ import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {
   title: string;
+  name: string;
   options: string[];
   counts?: number[];
 };
 
-const Option = ({ title, options, counts }: Props) => {
+const Option = ({ title, name, options, counts }: Props) => {
   const queryValue = useContext(QueryStringContext);
 
   const labels = options.map((option, idx) => (
     <Label key={option}>
       <InputWrapper>
-        <div className="checkbox">
+        <div
+          className={
+            queryValue?.state.selectOptions[name] === option
+              ? "checkbox checked"
+              : "checkbox"
+          }
+        >
           <input
             type="radio"
-            name={title}
+            name={name}
             value={option}
-            checked={queryValue?.state.selectOptions[title] === option}
+            checked={queryValue?.state.selectOptions[name] === option}
             onChange={queryValue?.actions.selectOnChange}
           />
           <span className="inner"></span>
@@ -32,7 +39,7 @@ const Option = ({ title, options, counts }: Props) => {
 
   return (
     <Container>
-      <Title>{title.charAt(0).toUpperCase() + title.slice(1)}</Title>
+      <Title>{title}</Title>
       <LabelWrapper>{labels}</LabelWrapper>
     </Container>
   );
@@ -82,7 +89,7 @@ const InputWrapper = styled.div`
       cursor: pointer;
       margin: 0;
       padding: 0;
-      /* opacity: 0; */
+      opacity: 0;
     }
     &.checked::after {
       position: absolute;
