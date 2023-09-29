@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import Option from "../components/Option";
+import { SelectBox } from "../components/styleElements";
+import Movies from "../components/Movies";
 
 type Props = {};
 
 const Seach = ({}: Props) => {
+  const yearList = Array.from(
+    Array(39),
+    (_, index) => new Date().getFullYear() - index
+  );
+
   return (
     <>
       <Header />
@@ -18,7 +25,26 @@ const Seach = ({}: Props) => {
             />
             <Option title="List Count" options={["10", "20", "30"]} />
           </SideLayout>
-          <MainLayout></MainLayout>
+          <MainLayout>
+            <MainTop>
+              <PageInfo>
+                Showing <span>1 ~ 10</span> out of <span>500</span> results
+              </PageInfo>
+              <SelectBox
+                name="year"
+                // value={selectOptions.year}
+                // onChange={selectOnChange}
+              >
+                <option value="all">All Years</option>
+                {yearList.map((item) => (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                ))}
+              </SelectBox>
+            </MainTop>
+            <Movies />
+          </MainLayout>
         </Container>
       </Main>
     </>
@@ -26,6 +52,8 @@ const Seach = ({}: Props) => {
 };
 
 const Main = styled.main`
+  height: auto;
+  /* min-height: 90vh; */
   padding-top: 32px;
   background-color: #fcfcfc;
 `;
@@ -34,7 +62,7 @@ const Container = styled.div`
   max-width: 1250px;
   margin: auto;
   display: flex;
-  gap: 32px;
+  gap: 70px;
   /* height: 3000px; */
   padding: 0 24px;
 `;
@@ -42,7 +70,6 @@ const Container = styled.div`
 const SideLayout = styled.div`
   width: 24%;
   min-width: 130px;
-  /* border: 1px solid blueviolet; */
   color: #627078;
   display: flex;
   flex-direction: column;
@@ -52,7 +79,20 @@ const SideLayout = styled.div`
 const MainLayout = styled.div`
   width: 76%;
   /* padding-left: 32px; */
-  border: 1px solid green;
+`;
+
+const MainTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  padding-bottom: 15px;
+`;
+
+const PageInfo = styled.div`
+  color: #615d58;
+  span {
+    font-weight: 600;
+  }
 `;
 
 export default Seach;

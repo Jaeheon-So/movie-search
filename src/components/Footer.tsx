@@ -1,10 +1,13 @@
+import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
 type Props = {};
 
 const Footer = ({}: Props) => {
+  const pathname = useLocation().pathname;
+
   return (
-    <MyFooter>
+    <MyFooter color={pathname.includes("search") ? "#fcfcfc" : "#fff"}>
       <Title>
         About
         <Detail width="400px">
@@ -46,15 +49,17 @@ const Footer = ({}: Props) => {
   );
 };
 
-const MyFooter = styled.footer`
-  position: absolute;
-  bottom: 0;
+const MyFooter = styled.footer<{ color: string }>`
+  /* position: absolute;
+  bottom: 0; */
+  height: 10vh;
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
-  padding: 20px 0;
+  background-color: ${(props) => props.color};
 `;
 
 const Title = styled.div`

@@ -31,7 +31,7 @@ const Option = ({ title, options, counts }: Props) => {
 const Container = styled.div``;
 
 const Title = styled.div`
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 `;
 
 const LabelWrapper = styled.div`

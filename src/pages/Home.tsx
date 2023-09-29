@@ -36,7 +36,7 @@ const Home = ({}: Props) => {
   }, [searchInput]);
 
   return (
-    <main>
+    <Main>
       <Container>
         <Title>
           <span>//</span> Movie Search
@@ -85,9 +85,13 @@ const Home = ({}: Props) => {
           </SelectWrapper>
         </InputWrapper>
       </Container>
-    </main>
+    </Main>
   );
 };
+
+const Main = styled.main`
+  min-height: 90vh;
+`;
 
 const Container = styled.div`
   padding-top: 205px;
@@ -114,7 +118,7 @@ const InputWrapper = styled.div`
   max-width: 650px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0px 25px 100px;
+  padding: 16px 25px 100px;
 `;
 
 const SearchInputWrapper = styled.div`
