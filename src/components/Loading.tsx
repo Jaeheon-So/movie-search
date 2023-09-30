@@ -12,6 +12,8 @@ const Loading = ({}: Props) => {
       <Skeleton />
       <Skeleton />
       <Skeleton />
+      <Skeleton />
+      <Skeleton />
     </Container>
   );
 };
