@@ -6,7 +6,7 @@ import { QueryStringProvider } from "./contexts/QueryStringContext.tsx";
 // 로딩 추가
 // 페이지네이션
 // list count -> 할지 말지 고민
-// 디바운스
+// 디바운스 -> 아마도 성공 경과 지켜바
 // 관심상품
 // 타입 0인거 누르면 안쏘게
 

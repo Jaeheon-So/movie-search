@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { useDebounce } from "../hooks/useDebounce";
 
 type Props = {
   children: JSX.Element | JSX.Element[];

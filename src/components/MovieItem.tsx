@@ -58,6 +58,7 @@ const Info = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   text-align: center;
+  line-height: 1.5;
 `;
 
 const Year = styled.div`

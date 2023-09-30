@@ -10,6 +10,7 @@ import { getSearchMovieData } from "../apis/api";
 import { SearchMovieResponseType, SearchTypeCount } from "../@types/data";
 import ErrorLayout from "../components/ErrorLayout";
 import { useDebounce } from "../hooks/useDebounce";
+import Loading from "../components/Loading";
 
 type Props = {};
 
@@ -27,6 +28,7 @@ const Seach = ({}: Props) => {
     queryValue?.state.selectOptions.s || "",
     500
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const yearList = Array.from(
     Array(39),
@@ -49,7 +51,7 @@ const Seach = ({}: Props) => {
     //     Response: "False",
     //     Error: `${searchParams.get("type")} not found!`,
     //   });
-
+    setIsLoading(true);
     const data = await getSearchMovieData({
       s: debouncedSearchTerm || "",
       type: searchParams.get("type") || "movie",
@@ -60,6 +62,7 @@ const Seach = ({}: Props) => {
     if (data.Error) data.Error = `${searchParams.get("type")} not found!`;
 
     setSearchMovieData(data);
+    setIsLoading(false);
     console.log(data);
   };
 
@@ -138,7 +141,9 @@ const Seach = ({}: Props) => {
                 ))}
               </SelectBox>
             </MainTop>
-            {searchMovieData?.Search?.length! > 0 ? (
+            {isLoading ? (
+              <Loading />
+            ) : searchMovieData?.Search?.length! > 0 ? (
               <Movies searchMovieData={searchMovieData?.Search || []} />
             ) : (
               <ErrorLayout message={searchMovieData?.Error || ""} />
