@@ -19,7 +19,7 @@ const Home = ({}: Props) => {
   useEffect(() => {
     if (searchInput.length > 0)
       navigate(
-        `/search?q=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}&count=${queryValue?.state.selectOptions.count}`
+        `/search?s=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}&count=${queryValue?.state.selectOptions.count}`
       );
   }, [searchInput]);
 
@@ -34,7 +34,7 @@ const Home = ({}: Props) => {
           <SearchInputWrapper>
             <SearchInput
               type="text"
-              name="q"
+              name="s"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search for Movies, Series & more "

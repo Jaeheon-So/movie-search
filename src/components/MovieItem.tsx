@@ -1,17 +1,23 @@
 import styled from "styled-components";
 import defaultImg from "/No_img.jpg";
+import { useNavigate } from "react-router-dom";
+import { SearchMovieData } from "../@types/data";
 
-type Props = {};
+type Props = {
+  movie: SearchMovieData;
+};
 
-const MovieItem = ({}: Props) => {
+const MovieItem = ({ movie }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <Container>
+    <Container onClick={() => navigate(`/detail/${movie.imdbID}`)}>
       <Info>
-        <Year>2023</Year>
-        <Title>Hello</Title>
+        <Year>{movie.Year}</Year>
+        <Title>{movie.Title}</Title>
       </Info>
       <img
-        src=""
+        src={movie.Poster}
         alt="movie-poster"
         onError={(e) => (e.currentTarget.src = defaultImg)}
       ></img>

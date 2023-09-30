@@ -6,7 +6,7 @@ type Props = {
   title: string;
   name: string;
   options: string[];
-  counts?: number[];
+  counts?: string[];
 };
 
 const Option = ({ title, name, options, counts }: Props) => {

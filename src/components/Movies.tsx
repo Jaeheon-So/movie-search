@@ -1,21 +1,17 @@
 import styled from "styled-components";
 import MovieItem from "./MovieItem";
+import { SearchMovieData } from "../@types/data";
 
-type Props = {};
+type Props = {
+  searchMovieData: SearchMovieData[];
+};
 
-const Movies = ({}: Props) => {
+const Movies = ({ searchMovieData }: Props) => {
   return (
     <Container>
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
-      <MovieItem />
+      {searchMovieData.map((movie) => (
+        <MovieItem movie={movie} key={movie.imdbID} />
+      ))}
     </Container>
   );
 };

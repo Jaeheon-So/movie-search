@@ -7,7 +7,7 @@ type Props = {
 
 export type SelectOptionType = {
   [key: string]: string;
-  q: string;
+  s: string;
   type: string;
   year: string;
   page: string;
@@ -32,7 +32,7 @@ export const QueryStringProvider = ({ children }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectOptions, setSelectOptions] = useState({
-    q: searchParams.get("q") || "",
+    s: searchParams.get("s") || "",
     type: searchParams.get("type") || "movie",
     year: searchParams.get("year") || "all",
     page: searchParams.get("page") || "1",
@@ -55,7 +55,7 @@ export const QueryStringProvider = ({ children }: Props) => {
 
   const initializeOptions = () => {
     setSelectOptions({
-      q: "",
+      s: "",
       type: "movie",
       year: "all",
       page: "1",
@@ -76,9 +76,10 @@ export const QueryStringProvider = ({ children }: Props) => {
   //   }, [selectOptions]);
 
   useEffect(() => {
+    console.log("ds");
     if (pathname === "/") return initializeOptions();
     setSelectOptions({
-      q: searchParams.get("q") || "",
+      s: searchParams.get("s") || "",
       type: searchParams.get("type") || "movie",
       year: searchParams.get("year") || "all",
       page: searchParams.get("page") || "1",

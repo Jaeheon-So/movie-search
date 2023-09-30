@@ -3,18 +3,98 @@ import Header from "../components/Header";
 import Option from "../components/Option";
 import { SelectBox } from "../components/styleElements";
 import Movies from "../components/Movies";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import QueryStringContext from "../contexts/QueryStringContext";
+import { useSearchParams } from "react-router-dom";
+import { getSearchMovieData } from "../apis/api";
+import { SearchMovieResponseType, SearchTypeCount } from "../@types/data";
+import ErrorLayout from "../components/ErrorLayout";
 
 type Props = {};
 
 const Seach = ({}: Props) => {
   const queryValue = useContext(QueryStringContext);
+  const [searchParams] = useSearchParams();
+  const [searchMovieData, setSearchMovieData] =
+    useState<SearchMovieResponseType>();
+  const [typeCount, setTypeCount] = useState<SearchTypeCount>({
+    movie: "0",
+    series: "0",
+    episode: "0",
+  });
 
   const yearList = Array.from(
     Array(39),
     (_, index) => new Date().getFullYear() - index
   );
+
+  const fetchSearchData = async () => {
+    if (searchParams.get("s")?.length! === 0)
+      return setSearchMovieData({
+        Response: "False",
+        Error: "Please enter your keyword to search.",
+      });
+    if (searchParams.get("s")?.length! < 3)
+      return setSearchMovieData({
+        Response: "False",
+        Error: "Too many results.",
+      });
+    // if (typeCount[searchParams.get("type")!] === "0")
+    //   return setSearchMovieData({
+    //     Response: "False",
+    //     Error: `${searchParams.get("type")} not found!`,
+    //   });
+
+    const data = await getSearchMovieData({
+      s: searchParams.get("s") || "",
+      type: searchParams.get("type") || "movie",
+      page: searchParams.get("page") || "1",
+      y: searchParams.get("year") === "all" ? "" : searchParams.get("year")!,
+    });
+
+    if (data.Error) data.Error = `${searchParams.get("type")} not found!`;
+
+    setSearchMovieData(data);
+    console.log(data);
+  };
+
+  const fetchTypeCount = async () => {
+    const obj: SearchTypeCount = { movie: "0", series: "0", episode: "0" };
+
+    if (searchParams.get("s")?.length! > 2) {
+      for (let key of Object.keys(obj)) {
+        const data = await getSearchMovieData({
+          s: searchParams.get("s") || "",
+          type: key,
+          page: searchParams.get("page") || "1",
+          y:
+            searchParams.get("year") === "all" ? "" : searchParams.get("year")!,
+        });
+
+        obj[key] = data.totalResults || "0";
+      }
+    }
+    setTypeCount(obj);
+  };
+
+  useEffect(() => {
+    fetchTypeCount();
+  }, [queryValue?.state.selectOptions.s, queryValue?.state.selectOptions.year]);
+
+  // useEffect(() => {
+  //   if (
+  //     typeCount[searchParams.get("type")!] === "0" &&
+  //     searchParams.get("s")?.length! > 2
+  //   )
+  //     setSearchMovieData({
+  //       Response: "False",
+  //       Error: `${searchParams.get("type")} not found!`,
+  //     });
+  // }, [typeCount]);
+
+  useEffect(() => {
+    fetchSearchData();
+  }, [searchParams]);
 
   return (
     <>
@@ -26,7 +106,7 @@ const Seach = ({}: Props) => {
               title="Type"
               name="type"
               options={["movie", "series", "episode"]}
-              counts={[0, 0, 0]}
+              counts={Object.values(typeCount || [])}
             />
             <Option
               title="List Count"
@@ -37,7 +117,8 @@ const Seach = ({}: Props) => {
           <MainLayout>
             <MainTop>
               <PageInfo>
-                Showing <span>1 ~ 10</span> out of <span>500</span> results
+                Showing <span>1 ~ 10</span> out of{" "}
+                <span>{searchMovieData?.totalResults || "0"}</span> results
               </PageInfo>
               <SelectBox
                 name="year"
@@ -52,7 +133,11 @@ const Seach = ({}: Props) => {
                 ))}
               </SelectBox>
             </MainTop>
-            <Movies />
+            {searchMovieData?.Search?.length! > 0 ? (
+              <Movies searchMovieData={searchMovieData?.Search || []} />
+            ) : (
+              <ErrorLayout message={searchMovieData?.Error || ""} />
+            )}
           </MainLayout>
         </Container>
       </Main>
@@ -62,7 +147,7 @@ const Seach = ({}: Props) => {
 
 const Main = styled.main`
   height: auto;
-  /* min-height: 90vh; */
+  min-height: 68.8vh;
   padding-top: 32px;
   background-color: #fcfcfc;
 `;

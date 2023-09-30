@@ -26,8 +26,8 @@ const Header = ({}: Props) => {
         <SearchInputWrapper>
           <SearchInput
             type="text"
-            name="q"
-            value={queryValue?.state.selectOptions.q}
+            name="s"
+            value={queryValue?.state.selectOptions.s}
             onChange={queryValue?.actions.selectOnChange}
             placeholder="Search for Movies, Series & more"
             autoFocus
