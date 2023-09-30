@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { useDebounce } from "../hooks/useDebounce";
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -30,6 +31,7 @@ const QueryStringContext =
 export const QueryStringProvider = ({ children }: Props) => {
   const pathname = useLocation().pathname;
   const [searchParams, setSearchParams] = useSearchParams();
+  // const debouncedSearchTerm = useDebounce(searchParams.get("s") || "", 500);
 
   const [selectOptions, setSelectOptions] = useState({
     s: searchParams.get("s") || "",
@@ -48,6 +50,7 @@ export const QueryStringProvider = ({ children }: Props) => {
       [name]: value,
     });
     if (pathname === "/") return;
+    if (name === "s") return;
 
     searchParams.set(name, e.target.value);
     setSearchParams(searchParams);
@@ -76,7 +79,6 @@ export const QueryStringProvider = ({ children }: Props) => {
   //   }, [selectOptions]);
 
   useEffect(() => {
-    console.log("ds");
     if (pathname === "/") return initializeOptions();
     setSelectOptions({
       s: searchParams.get("s") || "",

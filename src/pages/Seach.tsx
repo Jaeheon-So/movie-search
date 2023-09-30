@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { getSearchMovieData } from "../apis/api";
 import { SearchMovieResponseType, SearchTypeCount } from "../@types/data";
 import ErrorLayout from "../components/ErrorLayout";
+import { useDebounce } from "../hooks/useDebounce";
 
 type Props = {};
 
@@ -22,6 +23,10 @@ const Seach = ({}: Props) => {
     series: "0",
     episode: "0",
   });
+  const debouncedSearchTerm = useDebounce(
+    queryValue?.state.selectOptions.s || "",
+    500
+  );
 
   const yearList = Array.from(
     Array(39),
@@ -29,12 +34,12 @@ const Seach = ({}: Props) => {
   );
 
   const fetchSearchData = async () => {
-    if (searchParams.get("s")?.length! === 0)
+    if (debouncedSearchTerm?.length! === 0)
       return setSearchMovieData({
         Response: "False",
         Error: "Please enter your keyword to search.",
       });
-    if (searchParams.get("s")?.length! < 3)
+    if (debouncedSearchTerm?.length! < 3)
       return setSearchMovieData({
         Response: "False",
         Error: "Too many results.",
@@ -46,7 +51,7 @@ const Seach = ({}: Props) => {
     //   });
 
     const data = await getSearchMovieData({
-      s: searchParams.get("s") || "",
+      s: debouncedSearchTerm || "",
       type: searchParams.get("type") || "movie",
       page: searchParams.get("page") || "1",
       y: searchParams.get("year") === "all" ? "" : searchParams.get("year")!,
@@ -61,7 +66,7 @@ const Seach = ({}: Props) => {
   const fetchTypeCount = async () => {
     const obj: SearchTypeCount = { movie: "0", series: "0", episode: "0" };
 
-    if (searchParams.get("s")?.length! > 2) {
+    if (debouncedSearchTerm?.length! > 2) {
       for (let key of Object.keys(obj)) {
         const data = await getSearchMovieData({
           s: searchParams.get("s") || "",
@@ -79,7 +84,7 @@ const Seach = ({}: Props) => {
 
   useEffect(() => {
     fetchTypeCount();
-  }, [queryValue?.state.selectOptions.s, queryValue?.state.selectOptions.year]);
+  }, [debouncedSearchTerm, queryValue?.state.selectOptions.year]);
 
   // useEffect(() => {
   //   if (
@@ -93,8 +98,8 @@ const Seach = ({}: Props) => {
   // }, [typeCount]);
 
   useEffect(() => {
-    fetchSearchData();
-  }, [searchParams]);
+    if (debouncedSearchTerm !== undefined) fetchSearchData();
+  }, [debouncedSearchTerm, searchParams]);
 
   return (
     <>

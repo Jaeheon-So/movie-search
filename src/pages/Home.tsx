@@ -17,10 +17,11 @@ const Home = ({}: Props) => {
   );
 
   useEffect(() => {
-    if (searchInput.length > 0)
+    if (searchInput.trim().length > 2) {
       navigate(
         `/search?s=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}&count=${queryValue?.state.selectOptions.count}`
       );
+    }
   }, [searchInput]);
 
   return (
