@@ -1,19 +1,19 @@
 import { styled } from "styled-components";
-import Skeleton from "./Skeleton";
+import SearchSkeleton from "./SearchSkeleton";
 
 type Props = {};
 
 const Loading = ({}: Props) => {
   return (
     <Container>
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
+      <SearchSkeleton />
     </Container>
   );
 };

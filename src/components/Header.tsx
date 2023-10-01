@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { SearchInput } from "./styleElements";
 import { useContext } from "react";
@@ -9,6 +9,7 @@ type Props = {};
 const Header = ({}: Props) => {
   const navigate = useNavigate();
   const queryValue = useContext(QueryStringContext);
+  const pathname = useLocation().pathname;
 
   return (
     <MyHeader>
@@ -23,16 +24,18 @@ const Header = ({}: Props) => {
             <span>//</span> Movie Search
           </Logo>
         </Title>
-        <SearchInputWrapper>
-          <SearchInput
-            type="text"
-            name="s"
-            value={queryValue?.state.selectOptions.s}
-            onChange={queryValue?.actions.selectOnChange}
-            placeholder="Search for Movies, Series & more"
-            autoFocus
-          />
-        </SearchInputWrapper>
+        {pathname.includes("/search") ? (
+          <SearchInputWrapper>
+            <SearchInput
+              type="text"
+              name="s"
+              value={queryValue?.state.selectOptions.s}
+              onChange={queryValue?.actions.selectOnChange}
+              placeholder="Search for Movies, Series & more"
+              autoFocus
+            />
+          </SearchInputWrapper>
+        ) : null}
       </Container>
     </MyHeader>
   );

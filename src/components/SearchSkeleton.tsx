@@ -3,7 +3,7 @@ import { SkeletonItem } from "./styleElements";
 
 type Props = {};
 
-const Skeleton = ({}: Props) => {
+const SearchSkeleton = ({}: Props) => {
   return (
     <Container>
       <Info></Info>
@@ -35,4 +35,4 @@ const Info = styled(SkeletonItem)`
   text-align: center;
   border-radius: 0;
 `;
-export default Skeleton;
+export default SearchSkeleton;
