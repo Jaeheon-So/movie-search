@@ -117,11 +117,6 @@ const Seach = ({}: Props) => {
               options={["movie", "series", "episode"]}
               counts={Object.values(typeCount || [])}
             />
-            <Option
-              title="List Count"
-              name="count"
-              options={["10", "20", "30"]}
-            />
           </SideLayout>
           <MainLayout>
             <MainTop>

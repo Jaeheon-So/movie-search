@@ -32,6 +32,7 @@ const Paging = ({ totalResults }: Props) => {
 
 const Container = styled.div`
   padding-top: 50px;
+  padding-bottom: 35px;
   display: flex;
   justify-content: center;
 

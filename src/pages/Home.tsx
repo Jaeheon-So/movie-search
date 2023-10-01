@@ -19,7 +19,7 @@ const Home = ({}: Props) => {
   useEffect(() => {
     if (searchInput.trim().length > 2) {
       navigate(
-        `/search?s=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}&count=${queryValue?.state.selectOptions.count}`
+        `/search?s=${searchInput}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}`
       );
     }
   }, [searchInput]);
@@ -39,6 +39,7 @@ const Home = ({}: Props) => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search for Movies, Series & more "
+              autoFocus
             />
           </SearchInputWrapper>
           <SelectWrapper>
@@ -51,7 +52,7 @@ const Home = ({}: Props) => {
               <option value="series">series</option>
               <option value="episode">episode</option>
             </SelectBox>
-            <SelectBox
+            {/* <SelectBox
               name="count"
               value={queryValue?.state.selectOptions.count}
               onChange={queryValue?.actions.selectOnChange}
@@ -59,7 +60,7 @@ const Home = ({}: Props) => {
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
-            </SelectBox>
+            </SelectBox> */}
             <SelectBox
               name="year"
               value={queryValue?.state.selectOptions.year}

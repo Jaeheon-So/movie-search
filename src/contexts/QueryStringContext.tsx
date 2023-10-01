@@ -11,7 +11,6 @@ export type SelectOptionType = {
   type: string;
   year: string;
   page: string;
-  count: string;
 };
 
 export type QueryStringContextValueType = {
@@ -38,7 +37,6 @@ export const QueryStringProvider = ({ children }: Props) => {
     type: searchParams.get("type") || "movie",
     year: searchParams.get("year") || "all",
     page: searchParams.get("page") || "1",
-    count: searchParams.get("count") || "10",
   });
 
   const selectOnChange = (
@@ -73,7 +71,6 @@ export const QueryStringProvider = ({ children }: Props) => {
       type: "movie",
       year: "all",
       page: "1",
-      count: "10",
     });
   };
 
@@ -93,7 +90,6 @@ export const QueryStringProvider = ({ children }: Props) => {
       type: searchParams.get("type") || "movie",
       year: searchParams.get("year") || "all",
       page: searchParams.get("page") || "1",
-      count: searchParams.get("count") || "10",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [searchParams]);
