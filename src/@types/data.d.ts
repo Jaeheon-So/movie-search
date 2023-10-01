@@ -59,6 +59,7 @@ export interface DetailMovieResponseType {
   imdbID: string;
   imdbRating: string;
   imdbVotes: string;
+  Error?: string;
 }
 
 export interface Rating {

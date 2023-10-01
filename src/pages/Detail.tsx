@@ -7,6 +7,7 @@ import { DetailMovieResponseType } from "../@types/data";
 import defaultImg from "/No_img.jpg";
 import DetailItems from "../components/DetailItems";
 import DetailSkeleton from "../components/DetailSkeleton";
+import ErrorLayout from "../components/ErrorLayout";
 
 type Props = {};
 
@@ -21,6 +22,7 @@ const Detail = ({}: Props) => {
     const data = await getDetailhMovieData({ i: id || "", plot: "full" });
     setDetailMovieData(data);
     setisLoading(false);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -33,6 +35,8 @@ const Detail = ({}: Props) => {
       <Main>
         {isLoading ? (
           <DetailSkeleton />
+        ) : detailMovieData.Error ? (
+          <ErrorLayout message={detailMovieData.Error} />
         ) : (
           <Container>
             <Poster>
