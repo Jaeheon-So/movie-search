@@ -115,7 +115,7 @@ const Seach = ({}: Props) => {
               title="Type"
               name="type"
               options={["movie", "series", "episode"]}
-              counts={Object.values(typeCount || [])}
+              counts={Object.values(typeCount || {})}
             />
           </SideLayout>
           <MainLayout>
