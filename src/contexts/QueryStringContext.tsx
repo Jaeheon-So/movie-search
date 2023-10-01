@@ -20,6 +20,7 @@ export type QueryStringContextValueType = {
     selectOnChange: (
       e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => void;
+    pageChange: (page: string) => void;
     initializeOptions: () => void;
   };
 };
@@ -47,11 +48,22 @@ export const QueryStringProvider = ({ children }: Props) => {
     setSelectOptions({
       ...selectOptions,
       [name]: value,
+      page: "1",
     });
     if (pathname === "/") return;
     if (name === "s") return;
 
     searchParams.set(name, e.target.value);
+    searchParams.set("page", "1");
+    setSearchParams(searchParams);
+  };
+
+  const pageChange = (page: string) => {
+    setSelectOptions({
+      ...selectOptions,
+      page,
+    });
+    searchParams.set("page", page);
     setSearchParams(searchParams);
   };
 
@@ -69,13 +81,10 @@ export const QueryStringProvider = ({ children }: Props) => {
     state: { selectOptions },
     actions: {
       selectOnChange,
+      pageChange,
       initializeOptions,
     },
   };
-
-  //   useEffect(() => {
-  //     console.log(selectOptions);
-  //   }, [selectOptions]);
 
   useEffect(() => {
     if (pathname === "/") return initializeOptions();
@@ -86,6 +95,7 @@ export const QueryStringProvider = ({ children }: Props) => {
       page: searchParams.get("page") || "1",
       count: searchParams.get("count") || "10",
     });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [searchParams]);
 
   return (

@@ -11,6 +11,7 @@ import { SearchMovieResponseType, SearchTypeCount } from "../@types/data";
 import ErrorLayout from "../components/ErrorLayout";
 import { useDebounce } from "../hooks/useDebounce";
 import Loading from "../components/Loading";
+import Paging from "../components/Paging";
 
 type Props = {};
 
@@ -74,7 +75,7 @@ const Seach = ({}: Props) => {
         const data = await getSearchMovieData({
           s: searchParams.get("s") || "",
           type: key,
-          page: searchParams.get("page") || "1",
+          page: "1",
           y:
             searchParams.get("year") === "all" ? "" : searchParams.get("year")!,
         });
@@ -125,8 +126,21 @@ const Seach = ({}: Props) => {
           <MainLayout>
             <MainTop>
               <PageInfo>
-                Showing <span>1 ~ 10</span> out of{" "}
-                <span>{searchMovieData?.totalResults || "0"}</span> results
+                Showing{" "}
+                {searchMovieData?.totalResults ? (
+                  <span>{`${
+                    10 * (Number(queryValue?.state.selectOptions.page) - 1) + 1
+                  } ~ ${
+                    10 * Number(queryValue?.state.selectOptions.page) >
+                    Number(searchMovieData?.totalResults)
+                      ? Number(searchMovieData?.totalResults)
+                      : 10 * Number(queryValue?.state.selectOptions.page)
+                  }`}</span>
+                ) : (
+                  <span>0</span>
+                )}{" "}
+                out of <span>{searchMovieData?.totalResults || "0"}</span>{" "}
+                results
               </PageInfo>
               <SelectBox
                 name="year"
@@ -147,6 +161,9 @@ const Seach = ({}: Props) => {
               <Movies searchMovieData={searchMovieData?.Search || []} />
             ) : (
               <ErrorLayout message={searchMovieData?.Error || ""} />
+            )}
+            {typeCount[searchParams.get("type")!] === "0" ? null : (
+              <Paging totalResults={searchMovieData?.totalResults || "0"} />
             )}
           </MainLayout>
         </Container>
