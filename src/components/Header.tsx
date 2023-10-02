@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { SearchInput } from "./styleElements";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import QueryStringContext from "../contexts/QueryStringContext";
 
 type Props = {};
@@ -10,6 +10,15 @@ const Header = ({}: Props) => {
   const navigate = useNavigate();
   const queryValue = useContext(QueryStringContext);
   const pathname = useLocation().pathname;
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    setSearchInput(queryValue?.state.selectOptions.s || "");
+    if (pathname !== "/search" && searchInput)
+      navigate(
+        `/search?s=${queryValue?.state.selectOptions.s}&type=${queryValue?.state.selectOptions.type}&year=${queryValue?.state.selectOptions.year}&page=${queryValue?.state.selectOptions.page}`
+      );
+  }, [queryValue?.state.selectOptions.s]);
 
   return (
     <MyHeader>
@@ -24,7 +33,8 @@ const Header = ({}: Props) => {
             <span>//</span> Movie Search
           </Logo>
         </Title>
-        {pathname.includes("/search") ? (
+        {/* {pathname.includes("/search") ? ( */}
+        <>
           <SearchInputWrapper>
             <SearchInput
               type="text"
@@ -35,7 +45,9 @@ const Header = ({}: Props) => {
               autoFocus
             />
           </SearchInputWrapper>
-        ) : null}
+          <FavorLink onClick={() => navigate("/favor")}>Favor Movies</FavorLink>
+        </>
+        {/* ) : null} */}
       </Container>
     </MyHeader>
   );
@@ -77,6 +89,14 @@ const SearchInputWrapper = styled.div`
   display: flex;
   width: 76%;
   max-width: 650px;
+`;
+
+const FavorLink = styled.div`
+  flex-grow: 1;
+  text-align: end;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
 `;
 
 export default Header;

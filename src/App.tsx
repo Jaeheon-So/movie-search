@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import { QueryStringProvider } from "./contexts/QueryStringContext.tsx";
+import { FavorProvider } from "./contexts/FavorContext.tsx";
 
 // 관심상품
 // 최근 본 영화
@@ -11,10 +12,12 @@ type Props = {};
 
 const App = ({}: Props) => {
   return (
-    <QueryStringProvider>
-      <Outlet />
-      <Footer />
-    </QueryStringProvider>
+    <FavorProvider>
+      <QueryStringProvider>
+        <Outlet />
+        <Footer />
+      </QueryStringProvider>
+    </FavorProvider>
   );
 };
 

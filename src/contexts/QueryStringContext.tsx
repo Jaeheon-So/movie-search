@@ -85,6 +85,8 @@ export const QueryStringProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (pathname === "/") return initializeOptions();
+    if (pathname !== "/search") return;
+
     setSelectOptions({
       s: searchParams.get("s") || "",
       type: searchParams.get("type") || "movie",
@@ -93,6 +95,10 @@ export const QueryStringProvider = ({ children }: Props) => {
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [searchParams]);
+
+  // useEffect(() => {
+  //   console.log(selectOptions);
+  // }, [selectOptions]);
 
   return (
     <QueryStringContext.Provider value={value}>

@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getDetailhMovieData } from "../apis/api";
 import { DetailMovieResponseType } from "../@types/data";
 import defaultImg from "/No_img.jpg";
 import DetailItems from "../components/DetailItems";
 import DetailSkeleton from "../components/DetailSkeleton";
 import ErrorLayout from "../components/ErrorLayout";
+import { AiFillHeart } from "react-icons/ai";
+import FavorContext from "../contexts/FavorContext";
 
 type Props = {};
 
@@ -16,13 +18,27 @@ const Detail = ({}: Props) => {
   const [detailMovieData, setDetailMovieData] =
     useState<DetailMovieResponseType>({} as DetailMovieResponseType);
   const [isLoading, setisLoading] = useState<boolean>(false);
+  const favorList = useContext(FavorContext);
 
   const fetchDetailData = async () => {
     setisLoading(true);
     const data = await getDetailhMovieData({ i: id || "", plot: "full" });
     setDetailMovieData(data);
     setisLoading(false);
-    console.log(data);
+  };
+
+  const toggleFavor = () => {
+    favorList?.state.favorMovie.find(
+      (item) => item.imdbID === detailMovieData.imdbID
+    )
+      ? favorList.actions.deleteFavor(detailMovieData.imdbID)
+      : favorList?.actions.addFavor({
+          Title: detailMovieData.Title,
+          Year: detailMovieData.Year,
+          imdbID: detailMovieData.imdbID,
+          Type: detailMovieData.Type,
+          Poster: detailMovieData.Poster,
+        });
   };
 
   useEffect(() => {
@@ -47,7 +63,19 @@ const Detail = ({}: Props) => {
               />
             </Poster>
             <MovieDetail>
-              <Title>{detailMovieData.Title || "N/A"}</Title>
+              <Title>
+                <div>{detailMovieData.Title || "N/A"}</div>
+                <AiFillHeart
+                  className={
+                    favorList?.state.favorMovie.find(
+                      (item) => item.imdbID === detailMovieData.imdbID
+                    )
+                      ? "active"
+                      : ""
+                  }
+                  onClick={toggleFavor}
+                />
+              </Title>
               <Labels>
                 <span>{detailMovieData.Released}</span>
                 <span>{detailMovieData.Runtime}</span>
@@ -124,6 +152,23 @@ const Title = styled.div`
   font-weight: bold;
   line-height: 1;
   margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    display: inline-block;
+    color: #bcbcbc;
+    transition: 0.6s;
+    cursor: pointer;
+
+    &.active {
+      color: red;
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
 `;
 
 const Labels = styled.div`

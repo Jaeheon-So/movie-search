@@ -3,6 +3,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Seach from "./pages/Seach";
 import Detail from "./pages/Detail";
+import Favor from "./pages/Favor";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/detail/:id",
         element: <Detail />,
+      },
+      {
+        path: "/favor",
+        element: <Favor />,
       },
     ],
   },

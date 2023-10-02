@@ -64,7 +64,6 @@ const Seach = ({}: Props) => {
 
     setSearchMovieData(data);
     setIsLoading(false);
-    console.log(data);
   };
 
   const fetchTypeCount = async () => {
