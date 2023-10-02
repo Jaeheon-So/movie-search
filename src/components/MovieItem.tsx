@@ -14,7 +14,7 @@ const MovieItem = ({ movie }: Props) => {
   const navigate = useNavigate();
   const favorList = useContext(FavorContext);
 
-  const toggleFavor = (e: any) => {
+  const toggleFavor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
 
     favorList?.state.favorMovie.find((item) => item.imdbID === movie.imdbID)
