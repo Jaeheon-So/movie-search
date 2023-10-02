@@ -28,7 +28,7 @@ const Favor = ({}: Props) => {
 
 const Main = styled.main`
   height: auto;
-  min-height: 73vh;
+  min-height: 69vh;
   padding-top: 32px;
   line-height: 1.2;
 `;

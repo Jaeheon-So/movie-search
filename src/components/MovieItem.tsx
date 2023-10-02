@@ -2,6 +2,9 @@ import styled from "styled-components";
 import defaultImg from "/No_img.jpg";
 import { useNavigate } from "react-router-dom";
 import { SearchMovieData } from "../@types/data";
+import { AiFillHeart } from "react-icons/ai";
+import FavorContext from "../contexts/FavorContext";
+import { useContext } from "react";
 
 type Props = {
   movie: SearchMovieData;
@@ -9,6 +12,17 @@ type Props = {
 
 const MovieItem = ({ movie }: Props) => {
   const navigate = useNavigate();
+  const favorList = useContext(FavorContext);
+
+  const toggleFavor = (e: any) => {
+    e.stopPropagation();
+
+    favorList?.state.favorMovie.find((item) => item.imdbID === movie.imdbID)
+      ? favorList.actions.deleteFavor(movie.imdbID)
+      : favorList?.actions.addFavor({
+          ...movie,
+        });
+  };
 
   return (
     <Container onClick={() => navigate(`/detail/${movie.imdbID}`)}>
@@ -21,6 +35,16 @@ const MovieItem = ({ movie }: Props) => {
         alt="movie-poster"
         onError={(e) => (e.currentTarget.src = defaultImg)}
       ></img>
+      <AiFillHeart
+        className={
+          favorList?.state.favorMovie.find(
+            (item) => item.imdbID === movie.imdbID
+          )
+            ? "active"
+            : ""
+        }
+        onClick={toggleFavor}
+      />
     </Container>
   );
 };
@@ -45,6 +69,24 @@ const Container = styled.div`
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
+  }
+
+  svg {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    color: #bcbcbc;
+    transition: 0.5s;
+
+    &.active {
+      color: red;
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
   }
 `;
 
