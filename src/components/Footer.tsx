@@ -10,7 +10,7 @@ const Footer = ({}: Props) => {
     <MyFooter color={pathname.includes("search") ? "#fcfcfc" : "#fff"}>
       <Title>
         About
-        <Detail width="400px">
+        <Detail w="400px">
           <p>
             <span>//</span> This site searches movie by using{" "}
             <a href="https://www.omdbapi.com/" target="_blank">
@@ -30,7 +30,7 @@ const Footer = ({}: Props) => {
       </Title>
       <Title>
         Contact
-        <Detail width="300px">
+        <Detail w="300px">
           <p>
             Please contact me by email address below. <br />
             Please also visit my github.
@@ -73,13 +73,13 @@ const Title = styled.div`
   }
 `;
 
-const Detail = styled.div<{ width: string }>`
+const Detail = styled.div<{ w: string }>`
   cursor: default;
   display: none;
   flex-direction: column;
   justify-content: center;
   gap: 14px;
-  width: ${(props) => props.width};
+  width: ${(props) => props.w};
   height: 100px;
   padding: 12px 16px;
   border-radius: 10px;
@@ -89,7 +89,7 @@ const Detail = styled.div<{ width: string }>`
   background-color: #fff;
   position: absolute;
   top: -125px;
-  left: -190px;
+  left: ${(props) => -(parseInt(props.w) / 2 - 20)}px;
 
   span {
     color: #40a9ff;
