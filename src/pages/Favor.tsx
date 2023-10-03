@@ -4,6 +4,7 @@ import { useContext } from "react";
 import FavorContext from "../contexts/FavorContext";
 import MovieItem from "../components/MovieItem";
 import { SearchMovieData } from "../@types/data";
+import ErrorLayout from "../components/ErrorLayout";
 
 type Props = {};
 
@@ -16,9 +17,14 @@ const Favor = ({}: Props) => {
         <Container>
           <Title>Favor List</Title>
           <FavorWrapper>
-            {favorList?.state.favorMovie.map((movie: SearchMovieData) => (
-              <MovieItem movie={movie} key={movie.imdbID} />
-            ))}
+            {favorList?.state.favorMovie.length! > 0 ? (
+              favorList?.state.favorMovie.map((movie: SearchMovieData) => (
+                <MovieItem movie={movie} key={movie.imdbID} />
+              ))
+            ) : (
+              <ErrorLayout message="Add your favorite movies!" />
+            )}
+            {}
           </FavorWrapper>
         </Container>
       </Main>
