@@ -2,7 +2,7 @@
 
 ## 🎥 결과물
 
-- 배포 사이트: []()
+- 배포 사이트: [https://jhoney-movie-search.netlify.app](https://jhoney-movie-search.netlify.app)
 - 참고한 사이트
   - [https://grep.app/](https://grep.app/)
     <br/>
