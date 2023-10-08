@@ -9,6 +9,7 @@ export const useDebounce = (value: string, delay: number) => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
       searchParams.set("s", value);
+      searchParams.set("page", "1");
       setSearchParams(searchParams);
     }, delay);
     return () => {
